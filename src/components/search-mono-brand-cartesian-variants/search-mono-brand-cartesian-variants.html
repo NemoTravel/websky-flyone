@@ -29,7 +29,8 @@
                                     <a href ng-click="vm.resetDate(segNum, cell.date)"
                                         ng-class="{ control_disabled:!vm.checkResetDate(segNum, cell.date), 'loading-start': vm.loadingPeriodVariants }">
     								    {{ cell.date | formatDate: 'D MMM, dd'}}
-								        <strong ng-bind-html="{ value: cell.summ, currency: cell.currency } | price"></strong>
+								        <strong ng-if="cell.summ" ng-bind-html="{ value: cell.summ, currency: cell.currency } | price"></strong>
+                                        <strong ng-if="!cell.summ">{{ 'web.searchMonoBrandCalendarNoFlight' | aliasStatic }}</strong>
 							        </a>
                                 </td>
 						    </tr>
@@ -50,7 +51,8 @@
                     <a href ng-click="vm.resetDate(segNum, cell.date)"
                         ng-class="{ control_disabled:!vm.checkResetDate(segNum, cell.date), 'loading-start': vm.loadingPeriodVariants }">
                         {{ cell.date | formatDate: 'D MMM, dd'}}
-                        <strong ng-bind-html="{ value: cell.summ, currency: cell.currency } | price"></strong>
+                        <strong ng-if="cell.summ" ng-bind-html="{ value: cell.summ, currency: cell.currency } | price"></strong>
+                        <strong ng-if="!cell.summ">{{ 'web.searchMonoBrandCalendarNoFlight' | aliasStatic }}</strong>
                     </a>
                 </div>
                 <div class="item">
