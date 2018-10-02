@@ -1,4 +1,5 @@
 var app = angular.module('app');
+
 app.filter('trustUrl', ['$sce', function ($sce) {
     return function (url) {
         return $sce.trustAsResourceUrl(url);
@@ -8,8 +9,7 @@ app.filter('trustUrl', ['$sce', function ($sce) {
 app.component('rentalcarsIframe', {
     controllerAs: 'vm',
     bindings: {
-        searchParams: '<',
-        lang: '<'
+        orderInfo: '<'
     },
     templateUrl: 'components/rentalcars/rentalcars.html',
     controller: 'rentalcarsIframeCtrl'
@@ -21,7 +21,6 @@ function rentalcarsIframeCtrl($scope, $sce, backend) {
     var vm = this;
 
     vm.baseRentalCarsUrl = 'https://secure.rentalcars.com/WidgetSearch.do?';
-    vm.defaultHeight = 150;
     vm.DEFAULT_PARAMS = {
         affiliateCode: 'flyone',
         pickupIATACode: 'KIV',
@@ -35,43 +34,49 @@ function rentalcarsIframeCtrl($scope, $sce, backend) {
         returnDate: 9,
         returnMonth: 9,
         returnYear: 2018,
-        prefLang: 'ru',
+        preflang: 'ru',
         results: 3
     };
     vm.showRentalCarsIframe = false;
     vm.destionation = null;
 
-    $scope.$watchCollection(angular.bind(this, function () {
-        return vm.searchParams
-    }), function (newSearchParams) {
-        vm.destionation = newSearchParams.segments[0].destination;
-        vm.date = newSearchParams.segments[0].date.split('.');
 
-        var newParams = _.clone(vm.DEFAULT_PARAMS);
+    console.log($scope.$parent.$parent.$parent);
 
-
-        if (vm.date && vm.destionation) {
-            newParams.pickupIATACode = vm.destionation.codeEn;
-
-
-            newParams.pickupDate = vm.date[0];
-            newParams.pickupMonth = vm.date[1];
-            newParams.pickupYear = vm.date[2];
-
-            vm.showRentalCarsIframe = true;
-        }
-
-
-        constructUrl(newParams);
-    });
 
     vm.$onInit = function () {
-        constructUrl(vm.DEFAULT_PARAMS);
-        console.log($scope);
+
+        // don't show iframe in cancelled orders
+        if (vm.orderInfo.header.status === 'cancelled') {
+            return;
+        }
+
+        var newParams = _.clone(vm.DEFAULT_PARAMS),
+            firstFlight = getFlightData(),
+            firstFlightDate = firstFlight.arrivaldate.split('.'),
+            destCity = firstFlight.destinationcity;
+
+        backend.ready.then(function () {
+
+            newParams.pickupIATACode = destCity;
+            newParams.pickupDate = firstFlightDate[0];
+            newParams.pickupMonth = firstFlightDate[1];
+            newParams.pickupYear = firstFlightDate[2];
+            newParams.preflang = backend.sessionParams.lang;
+
+            constructUrl(newParams);
+
+            vm.showRentalCarsIframe = true;
+        });
     };
+
+    function getFlightData() {
+        return vm.orderInfo.plainFlights[0];
+    }
 
     function constructUrl(params) {
         var newUrl = 'https://secure.rentalcars.com/WidgetSearch.do?';
+
         Object.keys(params).map(function (key) {
             newUrl += key + '=' + params[key] + '&';
         });
