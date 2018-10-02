@@ -41,9 +41,6 @@ function rentalcarsIframeCtrl($scope, $sce, backend) {
     vm.destionation = null;
 
 
-    console.log($scope.$parent.$parent.$parent);
-
-
     vm.$onInit = function () {
 
         // don't show iframe in cancelled orders
