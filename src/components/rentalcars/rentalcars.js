@@ -15,9 +15,9 @@ app.component('rentalcarsIframe', {
     controller: 'rentalcarsIframeCtrl'
 });
 
-app.controller('rentalcarsIframeCtrl', ['$scope', '$sce', 'backend', '$route', rentalcarsIframeCtrl]);
+app.controller('rentalcarsIframeCtrl', ['$scope', '$sce', 'backend', '$route', 'ROUTES', rentalcarsIframeCtrl]);
 
-function rentalcarsIframeCtrl($scope, $sce, backend, $route) {
+function rentalcarsIframeCtrl($scope, $sce, backend, $route, ROUTES) {
     var vm = this;
 
     vm.baseRentalCarsUrl = 'https://secure.rentalcars.com/WidgetSearch.do?';
@@ -37,7 +37,7 @@ function rentalcarsIframeCtrl($scope, $sce, backend, $route) {
         preflang: 'ru',
         results: 3
     };
-    vm.SHOW_ON_PAGES = ['/confirm-order'];
+    vm.SHOW_ON_PAGES = [ROUTES.CONFIRM_ORDER, ROUTES.PRIVATE_ORDER];
     vm.showRentalCarsIframe = false;
     vm.destionation = null;
 
@@ -50,7 +50,6 @@ function rentalcarsIframeCtrl($scope, $sce, backend, $route) {
 
         // show only at specific pages (see vm.SHOW_ON_PAGES)
         if (!_.contains(vm.SHOW_ON_PAGES, $route.current.$$route.originalPath)) {
-            console.log($route.current.$$route.originalPath);
             return;
         }
 
