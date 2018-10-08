@@ -24,6 +24,7 @@ function rentalcarsIframeCtrl($scope, $sce, backend, $route, ROUTES) {
     vm.DEFAULT_PARAMS = {
         affiliateCode: 'flyone',
         pickupIATACode: 'KIV',
+        prefcurrency: 'EUR',
         pickupHour: 12,
         pickUpMinute: 30,
         returnHour: 10,
