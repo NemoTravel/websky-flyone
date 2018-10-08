@@ -48,7 +48,7 @@ function rentalcarsIframeCtrl($scope, $sce, backend, $route) {
             return;
         }
 
-        // don't show on wrong pages
+        // show only at specific pages (see vm.SHOW_ON_PAGES)
         if (!_.contains(vm.SHOW_ON_PAGES, $route.current.$$route.originalPath)) {
             console.log($route.current.$$route.originalPath);
             return;
