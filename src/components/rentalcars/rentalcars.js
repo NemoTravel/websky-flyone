@@ -15,9 +15,9 @@ app.component('rentalcarsIframe', {
     controller: 'rentalcarsIframeCtrl'
 });
 
-app.controller('rentalcarsIframeCtrl', ['$scope', '$sce', 'backend', rentalcarsIframeCtrl]);
+app.controller('rentalcarsIframeCtrl', ['$scope', '$sce', 'backend', '$route', rentalcarsIframeCtrl]);
 
-function rentalcarsIframeCtrl($scope, $sce, backend) {
+function rentalcarsIframeCtrl($scope, $sce, backend, $route) {
     var vm = this;
 
     vm.baseRentalCarsUrl = 'https://secure.rentalcars.com/WidgetSearch.do?';
@@ -37,9 +37,9 @@ function rentalcarsIframeCtrl($scope, $sce, backend) {
         preflang: 'ru',
         results: 3
     };
+    vm.SHOW_ON_PAGES = ['/confirm-order'];
     vm.showRentalCarsIframe = false;
     vm.destionation = null;
-
 
     vm.$onInit = function () {
 
@@ -47,6 +47,13 @@ function rentalcarsIframeCtrl($scope, $sce, backend) {
         if (vm.orderInfo.header.status === 'cancelled') {
             return;
         }
+
+        // don't show on wrong pages
+        if (!_.contains(vm.SHOW_ON_PAGES, $route.current.$$route.originalPath)) {
+            console.log($route.current.$$route.originalPath);
+            return;
+        }
+
 
         var newParams = _.clone(vm.DEFAULT_PARAMS),
             firstFlight = getFlightData(),
