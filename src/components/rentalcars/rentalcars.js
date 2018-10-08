@@ -37,7 +37,7 @@ function rentalcarsIframeCtrl($scope, $sce, backend, $route, ROUTES) {
         preflang: 'ru',
         results: 3
     };
-    vm.SHOW_ON_PAGES = [ROUTES.CONFIRM_ORDER, ROUTES.PRIVATE_ORDER];
+    vm.SHOW_ON_PAGES = [ROUTES.CONFIRM_ORDER, ROUTES.SEARCH_ORDER, ROUTES.SEARCH_ORDER_WITH_PARAMS];
     vm.showRentalCarsIframe = false;
     vm.destionation = null;
 
