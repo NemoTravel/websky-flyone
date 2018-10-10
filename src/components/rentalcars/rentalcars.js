@@ -58,7 +58,8 @@ function rentalcarsIframeCtrl($scope, $sce, backend, $route, ROUTES) {
         var newParams = _.clone(vm.DEFAULT_PARAMS),
             firstFlight = getFlightData(),
             firstFlightDate = firstFlight.arrivaldate.split('.'),
-            destCity = firstFlight.destinationcity;
+            destCity = firstFlight.destinationcity,
+            destPort = firstFlight.destinationport;
 
         backend.ready.then(function () {
 
@@ -67,6 +68,10 @@ function rentalcarsIframeCtrl($scope, $sce, backend, $route, ROUTES) {
             newParams.pickupMonth = firstFlightDate[1];
             newParams.pickupYear = firstFlightDate[2];
             newParams.preflang = backend.sessionParams.lang;
+
+            if (destPort) {
+                newParams.pickupIATACode = destPort;
+            }
 
             constructUrl(newParams);
 
