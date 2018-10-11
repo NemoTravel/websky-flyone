@@ -45,7 +45,7 @@ function rentalcarsIframeCtrl($scope, $sce, backend, $route, ROUTES) {
     vm.$onInit = function () {
 
         // don't show iframe in cancelled orders
-        if (vm.orderInfo.header.status === 'cancelled') {
+        if (vm.orderInfo.header.status !== 'paid') {
             return;
         }
 
