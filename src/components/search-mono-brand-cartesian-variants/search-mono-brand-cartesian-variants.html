@@ -8,10 +8,12 @@
             {{ 'web.searchResult.segmentLabel' | aliasStatic}}<span ng-if="vm.searchParams.segments.length > 1">{{ " " }}{{ 'web.searchResult.segmentLabel.' | aliasWithPrefix:segNum }}</span>:
             <a href ng-click="vm.scrollToSegment(segNum)" name="segment_{{ segNum }}">
                 <span>
-                    <geo-marker-wrapper prefix="flightWay__point_origin" key="search-mono-brand-cartesian-variants" cityinfo="segment.origin"></geo-marker-wrapper>
+                    <geo-marker-wrapper prefix="flightWay__point_origin" key="search-mono-brand-cartesian-variants"
+                                        cityinfo="segment.origin"></geo-marker-wrapper>
                 </span>
                 <span>
-                    <geo-marker-wrapper prefix="flightWay__point_destination" key="search-mono-brand-cartesian-variants" cityinfo="segment.destination"></geo-marker-wrapper>
+                    <geo-marker-wrapper prefix="flightWay__point_destination" key="search-mono-brand-cartesian-variants"
+                                        cityinfo="segment.destination"></geo-marker-wrapper>
                 </span>
             </a>
         </h2>
@@ -69,7 +71,9 @@
                         <td class="sortingCell firstCol">
                             <variants-sort-switch selected="vm.searchResult.segmentSort[segNum]"></variants-sort-switch>
                         </td>
-                        <td ng-repeat="(brandNum, brand) in vm.searchResult.brandsList" class="{{ brand.cssClass }}" ng-class="{ control_disabled: (segNum == 1 && !vm.searchResult.brandsCompatibleState[brandNum]) }">
+                        <td ng-repeat="(brandNum, brand) in vm.searchResult.brandsList"
+                            class="{{ brand.cssClass }}"
+                            ng-class="{ control_disabled: (segNum == 1 && !vm.searchResult.brandsCompatibleState[brandNum]) }">
                             <div class="columnTitle">
                                 <div ng-if="brand.theBest" class="best">
                                     {{ 'web.searchResult.brandTheBest' | aliasStatic}}
@@ -97,33 +101,46 @@
                         <td class="firstCol">
                             <table class="timeTable">
                                 <tr>
+                                    <td class="racenumber">
+                                        <span ng-repeat="(flightNum, flight) in row.flights">
+                                            {{ flightNum ? ', ' : '' }}
+                                            {{ flight.company.code_en }}-{{ flight.racenumber }}
+                                        </span>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
                                     <td>
                                         <p class="time">
                                             {{ row.flightsInfo.departuretime }}
                                             <sup ng-if="row.flightsInfo.departuredayshift">
                                                 {{ row.flightsInfo.departuredayshift | dayshift }}
-												<span class="infoBox">
-													<span ng-if="row.flightsInfo.departuredayshift == 1" class="infoBox__i">
+                                                <span class="infoBox">
+													<span ng-if="row.flightsInfo.departuredayshift == 1"
+                                                          class="infoBox__i">
 														{{ 'web.searchResult.departureTomorrow' | aliasStatic}}
 													</span>
-                                                    <span ng-if="row.flightsInfo.departuredayshift > 1" class="infoBox__i">
+                                                    <span ng-if="row.flightsInfo.departuredayshift > 1"
+                                                          class="infoBox__i">
 														{{ 'web.searchResult.departuredayshift' | aliasStatic}} {{row.flightsInfo.departuredayshift}} {{ 'web.searchResult.dayshiftDays' | aliasStatic}}
 													</span>
 												</span>
-											</sup>
+                                            </sup>
                                             –
                                             {{ row.flightsInfo.arrivaltime }}
                                             <sup ng-if="row.flightsInfo.arrivaldayshift">
                                                 {{ row.flightsInfo.arrivaldayshift | dayshift }}
-												<span class="infoBox">
-													<span ng-if="row.flightsInfo.arrivaldayshift == 1" class="infoBox__i">
+                                                <span class="infoBox">
+													<span ng-if="row.flightsInfo.arrivaldayshift == 1"
+                                                          class="infoBox__i">
 														{{ 'web.searchResult.arrivalTomorrow' | aliasStatic}}
 													</span>
-                                                    <span ng-if="row.flightsInfo.arrivaldayshift > 1" class="infoBox__i">
+                                                    <span ng-if="row.flightsInfo.arrivaldayshift > 1"
+                                                          class="infoBox__i">
 														{{ 'web.searchResult.arrivaldayshift' | aliasStatic}} {{row.flightsInfo.arrivaldayshift}} {{ 'web.searchResult.dayshiftDays' | aliasStatic}}
 													</span>
 												</span>
-											</sup>
+                                            </sup>
                                         </p>
                                     </td>
                                     <td>
@@ -166,8 +183,10 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <a href fancybox="popupFlightDetail" ng-click="vm.flightDetail = row" class="popup_js">
-                                            {{ row.flightsInfo.connectionsMessage }}<span ng-if="row.flightsInfo.connections && row.flightsInfo.connections.length == 1">: {{ row.flightsInfo.connections[0].time | timeAsWords }}</span>
+                                        <a href fancybox="popupFlightDetail" ng-click="vm.flightDetail = row"
+                                           class="popup_js">
+                                            {{ row.flightsInfo.connectionsMessage }}<span
+                                                ng-if="row.flightsInfo.connections && row.flightsInfo.connections.length == 1">: {{ row.flightsInfo.connections[0].time | timeAsWords }}</span>
                                         </a>
                                         <span ng-if="row.flightsInfo.landings.length" class="landing">
                                             {{ vm.suffixCount(row.flightsInfo.landings.length, ( 'web.searchResult.landings' | aliasStatic)) }}
@@ -178,32 +197,26 @@
                             </table>
 
                         </td>
-                        <td ng-repeat="(priceNum, priceItem) in row.prices track by $index" ng-class="{ active: priceItem.selected }">
-                            <wrap ng-if="priceItem">
+                        <td ng-repeat="(priceNum, priceItem) in row.prices track by $index"
+                            ng-class="{ active: priceItem.selected }"
+                            class="price-cell">
+                            <div class="price-cell__i" ng-if="priceItem">
                                 <a href
-                                    ng-class="{ control_disabled: (segNum == 1 && !vm.searchResult.brandsCompatibleState[priceNum]) || priceItem.comparedDateTimeDisable }"
-                                    ng-click="vm.selectVariant(segNum, rowNum, priceNum)">
-
-                                        <wrap ng-bind-html="{ value: priceItem.price, currency: priceItem.currency } | price"></wrap>
-
+                                    class="price-cell__link"
+                                   ng-class="{control_disabled:
+                                   (segNum == 1 && !vm.searchResult.brandsCompatibleState[priceNum])
+                                    || priceItem.comparedDateTimeDisable}"
+                                   ng-click="vm.selectVariant(segNum, rowNum, priceNum); vm.choosedFlag = true;">
+                                    <span class="price-cell__text" ng-bind-html="{value: priceItem.price, currency: priceItem.currency} | price"></span>
                                 </a>
-                                <span ng-if="segNum == 1 && vm.searchResult.brandsCompatibleState[priceNum] && priceItem.comparedDateTimeDisable" class="infoBoxWrap">
-                                    <i class="icon_info"></i>
-                                    <span class="infoBox">
-                                        <span class="infoBox__i">
-                                            {{ 'web.searchResult.flightTimesNotCompatible' | aliasStatic}}
-                                        </span>
-                                    </span>
-                                </span>
-                                <span ng-if="segNum == 1 && !vm.searchResult.brandsCompatibleState[priceNum]" class="infoBoxWrap">
-                                    <i class="icon_info"></i>
-                                    <span class="infoBox">
-                                        <span class="infoBox__i">
-                                            {{ 'web.searchResult.brandsNotCompatible' | aliasStatic}}
-                                        </span>
-                                    </span>
-                                </span>
-                            </wrap>
+                                <info-box ng-if="segNum == 0 || segNum == 1 && vm.choosedFlag == true"
+                                          val="vm.infoBoxGetText({
+                                    segNum: segNum,
+                                    availableSeats: priceItem.available,
+                                    brandsCompatibleState: vm.searchResult.brandsCompatibleState[priceNum],
+                                    comparedDateTimeDisable: priceItem.comparedDateTimeDisable
+                                });"></info-box>
+                            </div>
                             <i ng-if="!priceItem" class="icon_minus"></i>
                         </td>
                     </tr>
@@ -231,17 +244,17 @@
 
             <div class="chooseFlight__list">
 
-				<div ng-repeat="(rowNum, row) in vm.searchResult.segmentRows[segNum]" class="chooseFlight__list__item">
-					<label class="chooseFlight__list__item__label">
-						<input type="radio"
-                            name="flight_{{segNum}}"
-                            ng-model="vm.selectedFlightRow[segNum]"
-                            ng-change="vm.mobileFlightRowChangeHandler(segNum)"
-                            value="{{ rowNum }}"/>
-						<span></span>
-						<div class="chooseFlight__list__item__content">
-							<div class="chooseFlight__list__item__content__info">
-								<div class="chooseFlight__list__item__content__info__time">
+                <div ng-repeat="(rowNum, row) in vm.searchResult.segmentRows[segNum]" class="chooseFlight__list__item">
+                    <label class="chooseFlight__list__item__label">
+                        <input type="radio"
+                               name="flight_{{segNum}}"
+                               ng-model="vm.selectedFlightRow[segNum]"
+                               ng-change="vm.mobileFlightRowChangeHandler(segNum)"
+                               value="{{ rowNum }}" />
+                        <span></span>
+                        <div class="chooseFlight__list__item__content">
+                            <div class="chooseFlight__list__item__content__info">
+                                <div class="chooseFlight__list__item__content__info__time">
 									<span class="chooseFlight__list__item__content__info__time_wrap">
                                         {{ row.flightsInfo.departuretime }}
                                         <sup ng-if="row.flightsInfo.departuredayshift">
@@ -269,42 +282,45 @@
                                             </span>
                                         </sup>
                                     </span>
-								</div>
-								<div class="chooseFlight__list__item__content__info__price">
+                                </div>
+                                <div class="chooseFlight__list__item__content__info__price">
 									<span>
                                         {{ 'web.searchResult.minFlightPriceFrom' | aliasStatic}}
                                     </span>
                                     <span ng-bind-html="{ value: row.minPrice, currency: row.minPriceCurrency } | price"></span>
-								</div>
-							</div>
-							<div class="chooseFlight__list__item__content__bottom">
-								<div class="chooseFlight__list__item__content__bottom__link">
-                                    <a href fancybox="popupFlightDetail" ng-click="vm.flightDetail = row" class="popup_js">
-                                        {{ row.flightsInfo.connectionsMessage }}<span ng-if="row.flightsInfo.connections && row.flightsInfo.connections.length == 1">: {{ row.flightsInfo.connections[0].time | timeAsWords }}</span>
+                                </div>
+                            </div>
+                            <div class="chooseFlight__list__item__content__bottom">
+                                <div class="chooseFlight__list__item__content__bottom__link">
+                                    <a href fancybox="popupFlightDetail" ng-click="vm.flightDetail = row"
+                                       class="popup_js">
+                                        {{ row.flightsInfo.connectionsMessage }}<span
+                                            ng-if="row.flightsInfo.connections && row.flightsInfo.connections.length == 1">: {{ row.flightsInfo.connections[0].time | timeAsWords }}</span>
                                     </a>
                                     <span ng-if="row.flightsInfo.landings.length" class="landing">
                                         {{ vm.suffixCount(row.flightsInfo.landings.length, ( 'web.searchResult.landings' | aliasStatic)) }}
                                     </span>
-								</div>
-								<div class="chooseFlight__list__item__content__bottom__flightInfo">
+                                </div>
+                                <div class="chooseFlight__list__item__content__bottom__flightInfo">
 									<span ng-repeat="flight in row.flights" class="number">
                                         {{ flight.company.code || flight.company.code_en }}-{{ flight.racenumber }}
                                     </span>,
-									<span class="timeEnRoute">
+                                    <span class="timeEnRoute">
                                         {{ 'web.choosenFlight.flighttime' | aliasStatic}} {{ row.flightsInfo.flighttime | timeAsWords }}
                                     </span>
-								</div>
-							</div>
-						</div>
-					</label>
-				</div>
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
 
-			</div>
+            </div>
 
             <div class="title">
                 <div class="title__i">
                     <p>{{ 'web.searchResult.brandSelect' | aliasStatic}}</p>
-                    <a href ng-click="vm.showCompare(brand.code)" class="overview popup_js" name="brandsOverview_{{segNum}}">
+                    <a href ng-click="vm.showCompare(brand.code)" class="overview popup_js"
+                       name="brandsOverview_{{segNum}}">
                         {{ 'web.searchResult.brandCompare' | aliasStatic}} <i class="icon_info"></i>
                     </a>
                 </div>
@@ -314,17 +330,18 @@
 
             <div class="chooseFlight__table flightTable">
 
-				<div class="chooseFlight__table__item"
-                    ng-if="vm.searchResult.segmentRows[segNum][vm.selectedFlightRow[segNum]].prices"
-                    ng-repeat="(priceNum, priceItem) in vm.searchResult.segmentRows[segNum][vm.selectedFlightRow[segNum]].prices track by $index">
-					<div class="chooseFlight__table__item__columnTitle {{ vm.searchResult.brandsList[priceNum].cssClass }}">
+                <div class="chooseFlight__table__item"
+                     ng-if="vm.searchResult.segmentRows[segNum][vm.selectedFlightRow[segNum]].prices"
+                     ng-repeat="(priceNum, priceItem) in vm.searchResult.segmentRows[segNum][vm.selectedFlightRow[segNum]].prices track by $index">
+                    <div class="chooseFlight__table__item__columnTitle {{ vm.searchResult.brandsList[priceNum].cssClass }}">
 
                         <div ng-if="vm.searchResult.brandsList[priceNum].theBest" class="best">
                             {{ 'web.searchResult.brandTheBest' | aliasStatic}}
                         </div>
 
-						<span class="name">
-                            <a href ng-click="vm.showCompare(vm.searchResult.brandsList[priceNum].code)" class="popup_js">
+                        <span class="name">
+                            <a href ng-click="vm.showCompare(vm.searchResult.brandsList[priceNum].code)"
+                               class="popup_js">
                                 {{ vm.searchResult.brandsList[priceNum].name }}
                             </a>
 						</span>
@@ -341,23 +358,21 @@
                                 <i ng-if="!prop.name" class="icon_{{ prop.code }}"></i>
                             </li>
                         </ul>
-					</div>
-					<div class="chooseFlight__table__item__content" ng-class="{ active: priceItem.selected }">
-						<a ng-if="priceItem" href
-                            ng-click="vm.selectVariant(segNum, vm.selectedFlightRow[segNum], priceNum)"
-                            ng-class="{ control_disabled: (segNum == 1 && !vm.searchResult.brandsCompatibleState[priceNum]) || priceItem.comparedDateTimeDisable }"
-                            class="chooseFlight__table__item__content__link">
+                    </div>
+                    <div class="chooseFlight__table__item__content" ng-class="{ active: priceItem.selected }">
+                        <a ng-if="priceItem" href
+                           ng-click="vm.selectVariant(segNum, vm.selectedFlightRow[segNum], priceNum)"
+                           ng-class="{ control_disabled: (segNum == 1 && !vm.searchResult.brandsCompatibleState[priceNum]) || priceItem.comparedDateTimeDisable }"
+                           class="chooseFlight__table__item__content__link">
                             <span ng-bind-html="{ value: priceItem.price, currency: priceItem.currency } | price"></span>
-						</a>
+                        </a>
                         <i ng-if="!priceItem" class="icon_minus"></i>
-					</div>
-				</div>
+                    </div>
+                </div>
 
-			</div>
+            </div>
 
         </div>
-
-
 
 
     </div>
