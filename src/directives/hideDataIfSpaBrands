@@ -1,0 +1,22 @@
+angular.module('app').directive('hasSpaBrands', function () {
+    return {
+        scope: false,
+        bindToController: true,
+        controllerAs: 'hasSpaBrands',
+        controller: 'hasSpaBrandsController'
+    }
+});
+
+angular.module('app').controller('hasSpaBrandsController', ['$scope', hasSpaBrandsController]);
+
+function hasSpaBrandsController($scope) {
+    var brandList = $scope.vm.searchResult.brandsList;
+
+    var result = brandList.reduce(function (acc, brand) {
+        return brand.name.indexOf('SPA') !== -1;
+    }, false);
+
+    if (result) {
+        $scope.vm.searchResult.thereIsSPABrands = true;
+    }
+}
