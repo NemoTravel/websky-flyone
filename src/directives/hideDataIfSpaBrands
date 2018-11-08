@@ -12,11 +12,15 @@ angular.module('app').controller('hasSpaBrandsController', ['$scope', hasSpaBran
 function hasSpaBrandsController($scope) {
     var brandList = $scope.vm.searchResult.brandsList;
 
-    var result = brandList.reduce(function (acc, brand) {
-        return brand.name.indexOf('SPA') !== -1;
-    }, false);
+    $scope.$watch('vm.searchResult', function () {
+        if (!brandList) {
+            return
+        }
 
-    if (result) {
-        $scope.vm.searchResult.thereIsSPABrands = true;
-    }
+        $scope.vm.searchResult.thereIsSPABrands = brandList.reduce(function (acc, brand) {
+            return brand.name.indexOf('SPA') !== -1;
+        }, false);
+
+
+    })
 }
