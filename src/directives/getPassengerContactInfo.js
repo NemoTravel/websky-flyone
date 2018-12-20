@@ -15,8 +15,17 @@ function getPassengersContactInfoController($scope, $rootScope) {
     var vm = $scope;
 
     $scope.$watch(angular.bind(this, function () {
-        return $rootScope.$$childHead.vm.customerForm.email.$modelValue
+        if (
+            $rootScope.$$childHead &&
+            $rootScope.$$childHead.vm &&
+            $rootScope.$$childHead.vm.customerForm &&
+            $rootScope.$$childHead.vm.customerForm.email
+        ){
+            return $rootScope.$$childHead.vm.customerForm.email.$modelValue
+        }
     }), function (newCustomerEmail) {
-        $scope.vm.customerEmail = newCustomerEmail;
+        if (newCustomerEmail) {
+            $scope.vm.customerEmail = newCustomerEmail;
+        }
     });
 }
