@@ -44,18 +44,34 @@
                             <p class="documentDate" ng-if="passenger.documentDate">
                                 {{ 'web.orderInfo.passenger.documentDate' | aliasStatic}} {{ passenger.documentDate }}
                             </p>
-                            <p ng-if="$index === 0 && vm.customerEmail">
-                                {{ 'web.passenger.customerEmail' | aliasStatic }} {{ vm.customerEmail }}
-                            </p>
-
 
                         </td>
 
                     </tr>
                 </tbody>
 
+
+
+
+
             </table>
         </div>
+
+      <table class="detail__customer-info confirmNamesList">
+	      <thead>
+	        <tr><td><strong>{{ 'web.passengersInfo.customerHeader' | aliasStatic }}</strong></td></tr>
+	      </thead>
+	      <tbody class="confirmNamesList__item">
+					<tr>
+						<td>
+							<p ng-if="vm.customer.firstName"> {{ 'web.customerInfo.firstName' | aliasStatic }}: {{ vm.customer.firstName }} </p>
+							<p ng-if="vm.customer.lastName"> {{ 'web.customerInfo.lastName' | aliasStatic }}: {{ vm.customer.lastName }} </p>
+							<p ng-if="vm.customer.email"> {{ 'web.customerInfo.email' | aliasStatic }}: {{ vm.customer.email }} </p>
+							<p ng-if="vm.customer.phone"> {{ 'web.customerInfo.phone' | aliasStatic }}: {{ vm.customer.phone }}</p>
+						</td>
+					</tr>
+	      </tbody>
+      </table>
 
         <div ng-if="vm.emptyPatronymicPassengers.length" class="patronymicRequired">
             {{ 'web.passengers.emptyPatronymicAlert.textStart' | aliasStatic}}
