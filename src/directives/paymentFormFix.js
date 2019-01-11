@@ -1,34 +1,18 @@
 var app = angular.module('app');
 
 app.directive('paymentFormFix', function () {
-    return {
-        scope: {
-            paymentType: '=',
-            paymentForm: '=',
-            priceVariant: '='
-        },
-        bindToController: true,
-        controller: 'paymentFormFixController',
-        controllerAs: 'vm',
-
-        // поскольку значения по умолчанию теперь пустые, нужно снимать
-        // атрибут checked с инпута, сейчас input[checked=true] т.к в верстке payment-type-select
-        // присутствует код
-        // !vm.selectedPaymentType || vm.selectedPaymentType === 'plastic_card'
-        // поскольку в контроллере мы устанавливаем vm.paymentForm = vm.paymentType = null
-        // условие !vm.selectedPaymentType срабатывает и инпут выставляется как checked
-        link: function (scope, el) {
-            var elementPresentOnPageInterval = setInterval(function () {
-                var input = el.find('input:checked');
-
-                if (input.length) {
-                    input.prop('checked', false);
-                    clearInterval(elementPresentOnPageInterval);
-                }
-            }, 200);
+        return {
+            scope: {
+                paymentType: '=',
+                paymentForm: '=',
+                priceVariant: '='
+            },
+            bindToController: true,
+            controller: 'paymentFormFixController',
+            controllerAs: 'vm'
         }
-}
-});
+    }
+);
 
 app.controller('paymentFormFixController', ['$scope', paymentFormFixController]);
 

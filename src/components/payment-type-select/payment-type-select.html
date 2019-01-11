@@ -52,9 +52,16 @@
         <div class="radioBtn all-plastic-card" ng-if="priceVariantItem.code == 'plastic_card'"
              ng-click="vm.selectHandler(priceVariantItem.code);">
           <label>
+	          <!-- #42415
+						replace old ng-checked value
+							 ng-checked="!vm.selectedPaymentType || vm.selectedPaymentType === 'plastic_card'"
+					  to
+							 ng-checked="vm.selectedPaymentType === 'plastic_card'"
+						because we set vm.selectedPaymentType = null by default
+	          -->
             <input type="radio" name="pay"
                    ng-click="vm.cardSelectHandler({card: null, state: 'new'});"
-                   ng-checked="!vm.selectedPaymentType || vm.selectedPaymentType === 'plastic_card'"
+                   ng-checked="vm.selectedPaymentType === 'plastic_card'"
                    value="{{ priceVariantItem.code }}" />
             <span></span>
 
