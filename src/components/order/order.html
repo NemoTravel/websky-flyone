@@ -151,13 +151,12 @@
                           {{ 'web.choosenFlight.flighttime' | aliasStatic}} {{ segment.flightTime | timeAsWords }}
                         </div>
 
-                        <brand-props-info ng-if="segment.flights[0].brand && ( 'search.useMonoBrandCartesian' | param )"
+                        <brand-props-info ng-if="segment.flights[0].brand"
                                           brand-name="segment.flights[0].brandName"
                                           brand-available-props="segment.flights[0].brandAvailableProps"
                                           brand-paid-props="segment.flights[0].brandPaidProps"
                                           brand-unavailable-props="segment.flights[0].brandUnavailableProps">
-                          <brand-props-info>
-
+                          </brand-props-info>
                       </div>
                     </div>
                   </div>
@@ -212,9 +211,9 @@
                             {{ 'web.orderInfo.passenger.phone' | aliasStatic}}
                             {{ passenger.phone }}
                           </p>
-                          <p ng-if="passenger.eMail">
+                          <p ng-if="passenger.email">
                             {{ 'web.orderInfo.passenger.eMail' | aliasStatic}}
-                            {{ passenger.eMail }}
+                            {{ passenger.email }}
                           </p>
                         </td>
 
@@ -300,10 +299,10 @@
                             {{ vm.orderInfo.customer.phone }}
                           </p>
                         </td>
-                        <td ng-if="vm.orderInfo.customer.eMail">
+                        <td ng-if="vm.orderInfo.customer.email">
                           <p>
                             {{ 'web.orderInfo.customer.eMail' | aliasStatic}}
-                            {{ vm.orderInfo.customer.eMail }}
+                            {{ vm.orderInfo.customer.email }}
                           </p>
                         </td>
                       </tr>
